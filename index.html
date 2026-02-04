@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minecraft Birthday Letter</title>
+
+<style>
+body {
+    font-family: 'Courier New', monospace;
+    background: linear-gradient(to bottom, #87ceeb 0%, #228b22 50%, #8b4513 100%);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.container {
+    background: rgba(139, 69, 19, 0.9);
+    border: 5px solid #654321;
+    padding: 40px;
+    border-radius: 10px;
+    max-width: 600px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 2s ease-in-out;
+    z-index: 2;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    color: #ffd700;
+    font-size: 3em;
+    text-shadow: 2px 2px #000;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 2px 2px #000, 0 0 10px #ffd700; }
+    to { text-shadow: 2px 2px #000, 0 0 20px #ffd700, 0 0 30px #ffd700; }
+}
+
+p {
+    font-size: 1.5em;
+    line-height: 1.6;
+    text-shadow: 1px 1px #000;
+}
+
+.signature {
+    font-style: italic;
+    margin-top: 30px;
+    color: #ffd700;
+}
+
+/* Click button */
+.click-btn {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 30px;
+    font-size: 1.2em;
+    background: #654321;
+    color: #ffd700;
+    border: 3px solid #3b2a1a;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #3b2a1a;
+    text-decoration: none;
+    z-index: 10;
+    transition: all 0.2s;
+}
+
+.click-btn:hover {
+    background: #8b4513;
+    transform: translateX(-50%) scale(1.05);
+}
+
+.click-btn:active {
+    box-shadow: 0 3px 0 #3b2a1a;
+    transform: translate(-50%, 3px) scale(0.95);
+}
+
+/* Music hint */
+#clickHint {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    color: #fff;
+    background: rgba(0,0,0,0.4);
+    padding: 6px 12px;
+    border-radius: 6px;
+    z-index: 20;
+    transition: opacity 1s;
+}
+
+/* Code reveal container */
+#codeContainer {
+    display: none;
+    background: rgba(139, 69, 19, 0.9);
+    border: 5px solid #654321;
+    padding: 40px;
+    border-radius: 10px;
+    max-width: 600px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 2s ease-in-out;
+    z-index: 2;
+}
+
+#codeContainer h1 {
+    color: #ffd700;
+    font-size: 2.5em;
+    text-shadow: 2px 2px #000;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+#codeContainer p {
+    font-size: 1.5em;
+    line-height: 1.6;
+    text-shadow: 1px 1px #000;
+}
+
+#giftCode {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #ffd700;
+}
+
+/* Sequential message containers */
+.message {
+    display: none;
+    background: rgba(139, 69, 19, 0.9);
+    border: 5px solid #654321;
+    padding: 40px;
+    border-radius: 10px;
+    max-width: 600px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out; /* Slower transition */
+}
+
+.message.show {
+    opacity: 1;
+}
+
+/* Falling background elements */
+.falling-item {
+    position: absolute;
+    top: -50px;
+    font-size: 2em;
+    pointer-events: none;
+    animation: fall 15s linear infinite; /* Slower falling */
+    z-index: 1;
+}
+
+@keyframes fall {
+    from { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+    to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+/* Specific styles for different Minecraft items */
+.dirt { color: #8B4513; }
+.grass { color: #228B22; }
+.diamond { color: #00FFFF; }
+.stone { color: #696969; }
+.wood { color: #8B4513; }
+.sand { color: #F4A460; }
+.water { color: #4169E1; }
+.lava { color: #FF4500; }
+.obsidian { color: #2F4F4F; }
+.gold { color: #FFD700; }
+.iron { color: #D3D3D3; }
+.coal { color: #000000; }
+.redstone { color: #DC143C; }
+.emerald { color: #008000; }
+.netherrack { color: #8B0000; }
+.soul_sand { color: #654321; }
+.glowstone { color: #FFFF00; }
+.quartz { color: #F5F5F5; }
+.bedrock { color: #000000; }
+.tnt { color: #FF0000; }
+.bookshelf { color: #8B4513; }
+.crafting_table { color: #8B4513; }
+.furnace { color: #696969; }
+.chest { color: #8B4513; }
+.anvil { color: #696969; }
+.enchantment_table { color: #800080; }
+.beacon { color: #00FFFF; }
+.apple { color: #FF0000; }
+.bread { color: #D2691E; }
+.carrot { color: #FFA500; }
+.potato { color: #F4A460; }
+.beef { color: #8B0000; }
+.chicken { color: #FFFFF0; }
+.fish { color: #4169E1; }
+.pumpkin { color: #FF8C00; }
+.melon { color: #32CD32; }
+.cake { color: #F5DEB3; }
+</style>
+</head>
+<body>
+
+<!-- MUSIC -->
+<audio id="bgMusic" loop preload="auto">
+    <source src="Minecraft.mp3" type="audio/mpeg">
+</audio>
+
+<div id="clickHint">Click anywhere to start the music 🎵</div>
+
+<div class="container" id="initialContainer">
+    <h1>Happy Birthday, Adventurer!</h1>
+    <p>On this epic day, may your world be filled with diamonds, your adventures be legendary, and your cake be the tastiest block in the game!</p>
+    <p>Level up your year with joy, health, and endless fun. You're the rarest drop in my inventory!</p>
+    <p class="signature">From your Minecraft Friends</p>
+</div>
+
+<!-- Sequential Messages -->
+<div class="message" id="message1">
+    <h1>🙏🙏🙏</h1>
+    <p>Thank you for always being so patient with us. We really appreciate you more than you know.</p>
+</div>
+
+<div class="message" id="message2">
+    <h1>🙏🤝🦶</h1>
+    <p>Big thanks for being helpful and always having our backs. You make things easier for everyone.</p>
+</div>
+
+<div class="message" id="message3">
+    <h1>🥳🎉🎂</h1>
+    <p>Happy birthday, bro! We love you, hope tomorrow treats you right.</p>
+</div>
+
+<div class="container" id="codeContainer">
+    <h1>Here's Your Gift Code!</h1>
+    <p>Use this code to redeem your Minecraft adventure:</p>
+    <p id="giftCode">Y44VQ-JF2YY-G9799-XFH7F-KY9QZ</p>
+    <p class="signature">Enjoy your game!</p>
+</div>
+
+<!-- CLICK BUTTON -->
+<button class="click-btn" id="revealBtn">▶ Click Me</button>
+
+<script>
+const music = document.getElementById("bgMusic");
+const hint = document.getElementById("clickHint");
+const initialContainer = document.getElementById("initialContainer");
+const codeContainer = document.getElementById("codeContainer");
+const revealBtn = document.getElementById("revealBtn");
+const messages = [document.getElementById("message1"), document.getElementById("message2"), document.getElementById("message3")];
+let started = false;
+
+// Mobile-safe music start
+document.addEventListener("click", () => {
+    if (!started) {
+        started = true;
+        music.load();
+        music.play().catch(()=>{});
+        hint.style.opacity = 0;
+        setTimeout(() => hint.remove(), 1000);
+    }
+});
+
+// Function to show a message with fade in/out
+function showMessage(message, duration, callback) {
+    message.style.display = "block";
+    setTimeout(() => message.classList.add("show"), 100); // Fade in
+    setTimeout(() => {
+        message.classList.remove("show"); // Fade out
+        setTimeout(() => {
+            message.style.display = "none";
+            if (callback) callback();
+        }, 1500); // Wait for slower fade out
+    }, duration);
+}
+
+// Reveal sequence on button click
+revealBtn.addEventListener("click", () => {
+    initialContainer.style.display = "none";
+    revealBtn.style.display = "none";
+    
+    // Create particle effects
+    for (let i = 0; i < 20; i++) {
+        createParticle();
+    }
+    
+    // Sequence: Message 1 -> Message 2 -> Message 3 -> Code (slower: 5 seconds each)
+    showMessage(messages[0], 5000, () => { // 5 seconds
+        showMessage(messages[1], 5000, () => { // 5 seconds
+            showMessage(messages[2], 5000, () => { // 5 seconds
+                codeContainer.style.display = "block"; // Finally show code
+            });
+        });
+    });
+});
+
+// Function to create falling particles
+function createParticle() {
+    const particle = document.createElement("div");
+    particle.className = "particle";
+    particle.style.left = Math.random() * 100 + "vw";
+    particle.style.animationDelay = Math.random() * 5 + "s";
+    document.body.appendChild(particle);
+    
+    setTimeout(() => {
+        particle.remove();
+    }, 5000);
+}
+
+// Function to create falling background items
+function createFallingItem() {
+    const item = document.createElement("div");
+    const randomIndex = Math.floor(Math.random() * items.length);
+    item.textContent = items[randomIndex];
+    item.className = `falling-item ${itemClasses[randomIndex]}`;
+    item.style.left = Math.random() * 100 + "vw";
+    item.style.animationDuration = (Math.random() * 5 + 10) + "s"; // 10-15 seconds (slower)
+    item.style.animationDelay = Math.random() * 2 + "s";
+    document.body.appendChild(item);
+    
+    setTimeout(() => {
+        item.remove();
+    }, 15000); // Match longer duration
+}
+
+// Even more Minecraft blocks/items/tools/food to fall
+const items = ['🟫', '🟩', '💎', '🪨', '🪵', '🏜️', '🌊', '🔥', '🖤', '🟨', '⚪', '⚫', '🔴', '💚', '🔥', '🏜️', '💡', '💎', '🖤', '💣', '📚', '🛠️', '🏭', '📦', '🔨', '✨', '🏰', '🍎', '🍞', '🥕', '🥔', '🥩', '🍗', '🐟', '🎃', '🍈', '🍰'];
+const itemClasses = ['dirt', 'grass', 'diamond', 'stone', 'wood', 'sand', 'water', 'lava', 'obsidian', 'gold', 'iron', 'coal', 'redstone', 'emerald', 'netherrack', 'soul_sand', 'glowstone', 'quartz', 'bedrock', 'tnt', 'bookshelf', 'crafting_table', 'furnace', 'chest', 'anvil', 'enchantment_table', 'beacon', 'apple', 'bread', 'carrot', 'potato', 'beef', 'chicken', 'fish', 'pumpkin', 'melon', 'cake'];
+
+// Start falling items on page load (even more frequent)
+setInterval(createFallingItem, 800); // Every 0.8 seconds for denser rain
+
+// Create initial items
+for (let i = 0; i < 15; i++) {
+    setTimeout(createFallingItem, i * 150);
+}
+</script>
+
+</body>
+</html>
